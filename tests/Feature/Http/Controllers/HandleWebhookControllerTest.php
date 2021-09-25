@@ -1,11 +1,8 @@
 <?php
 
-use Flowframe\Docs\Events\DocsGeneratedEvent;
 use Flowframe\Docs\Jobs\GenerateDocsJob;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
 
-use function Pest\Laravel\expectsEvents;
 use function Pest\Laravel\expectsJobs;
 use function Pest\Laravel\post;
 use function PHPUnit\Framework\assertCount;

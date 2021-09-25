@@ -21,7 +21,7 @@ function githubWebhookRequestBody(array $data = []): array
             'forks_count' => 3,
             'open_issues_count' => 1,
             'language' => 'PHP',
-            'license' => 'MIT'
+            'license' => 'MIT',
         ],
     ], $data);
 

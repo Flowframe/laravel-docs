@@ -2,9 +2,9 @@
 
 namespace Flowframe\Docs\Tests;
 
+use Flowframe\Docs\DocsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Flowframe\Docs\DocsServiceProvider;
 
 class TestCase extends Orchestra
 {
