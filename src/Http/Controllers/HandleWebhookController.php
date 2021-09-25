@@ -16,7 +16,7 @@ class HandleWebhookController
 
         abort_unless(
             hash_equals($expectedSignature, $receivedSignature),
-            Response::HTTP_BAD_REQUEST,
+            Response::HTTP_UNAUTHORIZED,
             'Invalid signature',
         );
 
