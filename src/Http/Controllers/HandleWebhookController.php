@@ -20,7 +20,7 @@ class HandleWebhookController
             'Invalid signature',
         );
 
-        if (Str::afterLast(request()->json('sender.base_ref'), '/') !== config('laravel-docs.main_branch')) {
+        if (Str::afterLast(request()->json('base_ref'), '/') !== config('laravel-docs.main_branch')) {
             return response('skipped build');
         }
 
