@@ -1,0 +1,33 @@
+<?php
+
+namespace Flowframe\Docs\Http\Controllers;
+
+use Flowframe\Docs\Jobs\GenerateDocsJob;
+use Flowframe\Docs\Repository;
+use Illuminate\Http\Response;
+use Illuminate\Support\Str;
+
+class HandleWebhookController
+{
+    public function __invoke()
+    {
+        $receivedSignature = request()->header('X-Hub-Signature-256');
+        $expectedSignature = 'sha256=' . hash_hmac('sha256', json_encode(request()->post()), config('laravel-docs.github_secret'));
+
+        abort_unless(
+            hash_equals($expectedSignature, $receivedSignature),
+            Response::HTTP_BAD_REQUEST,
+            'Invalid signature',
+        );
+
+        if (Str::afterLast(request()->post('ref'), '/') !== config('laravel-docs.main_branch')) {
+            return response('skipped build');
+        }
+
+        $webhookData = Repository::fromRequest(request());
+
+        dispatch(new GenerateDocsJob($webhookData));
+
+        return response('ok');
+    }
+}
