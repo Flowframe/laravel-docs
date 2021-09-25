@@ -12,7 +12,7 @@ class HandleWebhookController
     public function __invoke()
     {
         $receivedSignature = request()->header('X-Hub-Signature-256');
-        $expectedSignature = 'sha256=' . hash_hmac('sha256', json_encode(request()->post()), config('laravel-docs.github_secret'));
+        $expectedSignature = 'sha256=' . hash_hmac('sha256', request()->getContent(), config('laravel-docs.github_secret'));
 
         abort_unless(
             hash_equals($expectedSignature, $receivedSignature),
@@ -20,7 +20,7 @@ class HandleWebhookController
             'Invalid signature',
         );
 
-        if (Str::afterLast(request()->post('ref'), '/') !== config('laravel-docs.main_branch')) {
+        if (Str::afterLast(request()->json('ref'), '/') !== config('laravel-docs.main_branch')) {
             return response('skipped build');
         }
 

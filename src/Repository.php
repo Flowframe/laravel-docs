@@ -11,13 +11,13 @@ class Repository implements Jsonable
         public string $url,
         public string $htmlUrl,
         public string $name,
-        public ?string $description,
+        public ?string $description = null,
         public string $fullName,
         public int $starsCount,
         public int $forksCount,
         public int $openIssuesCount,
-        public ?string $language,
-        public ?string $license,
+        public ?string $language = null,
+        public ?array $license = null,
     ) {
     }
 
@@ -29,16 +29,16 @@ class Repository implements Jsonable
     public static function fromRequest(Request $request): self
     {
         return new static(
-            url: $request->post('repository')['ssh_url'],
-            htmlUrl: $request->post('repository')['html_url'],
-            name: $request->post('repository')['name'],
-            description: $request->post('repository')['description'],
-            fullName: $request->post('repository')['full_name'],
-            starsCount: $request->post('repository')['stargazers_count'],
-            forksCount: $request->post('repository')['forks_count'],
-            openIssuesCount: $request->post('repository')['open_issues_count'],
-            language: $request->post('repository')['language'],
-            license: $request->post('repository')['license'],
+            url: $request->json('repository.ssh_url'),
+            htmlUrl: $request->json('repository.html_url'),
+            name: $request->json('repository.name'),
+            description: $request->json('repository.description'),
+            fullName: $request->json('repository.full_name'),
+            starsCount: $request->json('repository.stargazers_count'),
+            forksCount: $request->json('repository.forks_count'),
+            openIssuesCount: $request->json('repository.open_issues_count'),
+            language: $request->json('repository.language'),
+            license: $request->json('repository.license'),
         );
     }
 
