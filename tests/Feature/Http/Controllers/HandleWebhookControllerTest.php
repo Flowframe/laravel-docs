@@ -17,17 +17,6 @@ it('should fail due to invalid signature', function () {
     )->assertStatus(401);
 });
 
-it('should skip build', function () {
-    $body = githubWebhookRequestBody(['base_ref' => 'refs/heads/invalid']);
-    $signature = 'sha256=' . hash_hmac('sha256', json_encode($body), config('laravel-docs.github_secret'));
-
-    postJson(
-        '/webhooks/github/docs/update',
-        $body,
-        ['X-Hub-Signature-256' => $signature],
-    )->assertStatus(200)->assertSee('skipped build');
-});
-
 it('should process the request', function () {
     $body = githubWebhookRequestBody();
     $signature = 'sha256=' . hash_hmac('sha256', json_encode($body), config('laravel-docs.github_secret'));

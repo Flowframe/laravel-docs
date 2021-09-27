@@ -5,7 +5,6 @@ namespace Flowframe\Docs\Http\Controllers;
 use Flowframe\Docs\Jobs\GenerateDocsJob;
 use Flowframe\Docs\Repository;
 use Illuminate\Http\Response;
-use Illuminate\Support\Str;
 
 class HandleWebhookController
 {
@@ -19,10 +18,6 @@ class HandleWebhookController
             Response::HTTP_UNAUTHORIZED,
             'Invalid signature',
         );
-
-        if (Str::afterLast(request()->json('base_ref'), '/') !== config('laravel-docs.main_branch')) {
-            return response('skipped build');
-        }
 
         $webhookData = Repository::fromRequest(request());
 
