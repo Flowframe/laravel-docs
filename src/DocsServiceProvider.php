@@ -2,6 +2,7 @@
 
 namespace Flowframe\Docs;
 
+use Flowframe\Docs\Commands\GenerateDocsCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -11,6 +12,7 @@ class DocsServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('laravel-docs')
+            ->hasCommand(GenerateDocsCommand::class)
             ->hasConfigFile('laravel-docs')
             ->hasRoute('web')
             ->hasViews();

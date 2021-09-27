@@ -10,8 +10,7 @@ class ListRepositoriesController
     public function __invoke()
     {
         $repositories = collect(File::directories(resource_path('docs')))
-            ->map(fn (string $path) => Repository::fromJsonFile("{$path}/meta.json"))
-            ->sortBy('starsCount');
+            ->map(fn (string $path) => Repository::fromFile("{$path}/_meta.yml"));
 
         return view('docs::list-repositories', [
             'repositories' => $repositories,

@@ -2,7 +2,6 @@
 
 namespace Flowframe\Docs\Events;
 
-use Flowframe\Docs\Repository;
 use Illuminate\Foundation\Events\Dispatchable;
 
 class DocsGeneratedEvent
@@ -10,7 +9,8 @@ class DocsGeneratedEvent
     use Dispatchable;
 
     public function __construct(
-        public Repository $repository
+        public string $repositoryName,
+        public string $repositoryUrl,
     ) {
     }
 }

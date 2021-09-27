@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\File;
 use function Pest\Laravel\postJson;
 use function PHPUnit\Framework\assertCount;
 use function PHPUnit\Framework\assertDirectoryExists;
-use function PHPUnit\Framework\assertFileExists;
 
 it('should fail due to invalid signature', function () {
     postJson(
@@ -36,6 +35,4 @@ it('should process the request', function () {
     assertCount(0, File::directories(storage_path('tmp')));
 
     assertDirectoryExists(resource_path('docs/laravel-docs'));
-
-    assertFileExists(resource_path('docs/laravel-docs/meta.json'));
 });

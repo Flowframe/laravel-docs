@@ -32,7 +32,7 @@ class ShowDocController
         return view('docs::show-doc', [
             'categories' => $categories,
             'doc' => $doc,
-            'repository' => Repository::fromJsonFile(resource_path("docs/{$repository}/meta.json")),
+            'repository' => Repository::fromFile(resource_path("docs/{$repository}/_meta.yml")),
         ]);
     }
 }

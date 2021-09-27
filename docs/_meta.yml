@@ -1,0 +1,6 @@
+url: https://github.com/flowframe/laravel-docs
+name: Laravel Docs
+fullName: flowframe/laravel-docs
+description: Easily self host your documentation.
+language: PHP
+license: MIT

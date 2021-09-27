@@ -3,7 +3,6 @@
 namespace Flowframe\Docs\Http\Controllers;
 
 use Flowframe\Docs\Jobs\GenerateDocsJob;
-use Flowframe\Docs\Repository;
 use Illuminate\Http\Response;
 
 class HandleWebhookController
@@ -19,9 +18,9 @@ class HandleWebhookController
             'Invalid signature',
         );
 
-        $webhookData = Repository::fromRequest(request());
-
-        dispatch(new GenerateDocsJob($webhookData))->afterResponse();
+        dispatch(
+            new GenerateDocsJob(request()->json('repository.ssh_url'))
+        )->afterResponse();
 
         return response('ok');
     }
