@@ -1,27 +1,27 @@
 <?php
 
 use Flowframe\Docs\Jobs\GenerateDocsJob;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\File;
 
-use function Pest\Laravel\expectsJobs;
-use function Pest\Laravel\post;
+use function Pest\Laravel\postJson;
 use function PHPUnit\Framework\assertCount;
 use function PHPUnit\Framework\assertDirectoryExists;
 use function PHPUnit\Framework\assertFileExists;
 
 it('should fail due to invalid signature', function () {
-    post(
+    postJson(
         '/webhooks/github/docs/update',
         githubWebhookRequestBody(),
         ['X-Hub-Signature-256' => 'false-signature'],
-    )->assertStatus(400);
+    )->assertStatus(401);
 });
 
 it('should skip build', function () {
-    $body = githubWebhookRequestBody(['ref' => 'refs/heads/invalid']);
+    $body = githubWebhookRequestBody(['base_ref' => 'refs/heads/invalid']);
     $signature = 'sha256=' . hash_hmac('sha256', json_encode($body), config('laravel-docs.github_secret'));
 
-    post(
+    postJson(
         '/webhooks/github/docs/update',
         $body,
         ['X-Hub-Signature-256' => $signature],
@@ -32,13 +32,15 @@ it('should process the request', function () {
     $body = githubWebhookRequestBody();
     $signature = 'sha256=' . hash_hmac('sha256', json_encode($body), config('laravel-docs.github_secret'));
 
-    expectsJobs([GenerateDocsJob::class]);
+    Bus::fake([GenerateDocsJob::class]);
 
-    post(
+    postJson(
         '/webhooks/github/docs/update',
         $body,
         ['X-Hub-Signature-256' => $signature],
     )->assertStatus(200)->assertSee('ok');
+
+    Bus::assertDispatchedAfterResponse(GenerateDocsJob::class);
 
     assertCount(1, File::directories(resource_path('docs')));
 

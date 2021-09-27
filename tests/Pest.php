@@ -10,7 +10,7 @@ uses(TestCase::class)->in(__DIR__);
 function githubWebhookRequestBody(array $data = []): array
 {
     $body = array_merge([
-        'ref' => 'refs/heads/master',
+        'base_ref' => 'refs/heads/master',
         'repository' => [
             'name' => 'laravel-docs',
             'full_name' => 'Flowframe/laravel-docs',
@@ -21,7 +21,7 @@ function githubWebhookRequestBody(array $data = []): array
             'forks_count' => 3,
             'open_issues_count' => 1,
             'language' => 'PHP',
-            'license' => 'MIT',
+            'license' => [],
         ],
     ], $data);
 

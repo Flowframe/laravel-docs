@@ -26,7 +26,7 @@ class HandleWebhookController
 
         $webhookData = Repository::fromRequest(request());
 
-        dispatch(new GenerateDocsJob($webhookData));
+        dispatch(new GenerateDocsJob($webhookData))->afterResponse();
 
         return response('ok');
     }
