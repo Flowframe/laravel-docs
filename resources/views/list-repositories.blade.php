@@ -31,21 +31,16 @@
                     <dt>Description</dt>
                     <dd>{{ $repository->description ?? 'No description' }}</dd>
 
-                    <dt>Stars</dt>
-                    <dd>{{ $repository->starsCount }}</dd>
-
-                    <dt>Forks</dt>
-                    <dd>{{ $repository->forksCount }}</dd>
-
-                    <dt>Open issues</dt>
-                    <dd>{{ $repository->openIssuesCount }}</dd>
-
                     <dt>Language</dt>
                     <dd>{{ $repository->language }}</dd>
 
                     <dt>License</dt>
                     <dd>{{ $repository->license ?? 'No license' }}</dd>
                 </dl>
+
+                <p>
+                    <a target="_blank" href="{{ $repository->url }}">View on GitHub</a>
+                </p>
             </li>
         @endforeach
     </ul>

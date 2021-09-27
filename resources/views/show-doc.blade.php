@@ -45,6 +45,11 @@
     <main>
         {!! Str::markdown($doc->content) !!}
     </main>
+
+    <a
+        target="_blank"
+        href="{{ "{$repository->url}/blob/master/docs/{$doc->slug}.md" }}"
+    >Edit on GitHub</a>
 </body>
 
 </html>
