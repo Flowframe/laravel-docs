@@ -23,6 +23,12 @@ class GenerateDocsCommand extends Command
         $tmpPath = storage_path("tmp/{$name}");
         $newPath = resource_path("docs/{$name}");
 
+        if (File::exists($tmpPath)) {
+            $this->comment('Deleting old `tmp` directory');
+
+            File::deleteDirectory($tmpPath);
+        }
+
         $this->info("Cloning repository {$fullName}");
 
         Terminal::with([
