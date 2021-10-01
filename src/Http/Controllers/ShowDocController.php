@@ -29,10 +29,17 @@ class ShowDocController
             ->sortBy('order')
             ->groupBy('category');
 
+        $repository = Repository::fromFile(resource_path("docs/{$repository}/_meta.yml"));
+
+        seo()
+            ->title($doc->title)
+            ->description($repository->description)
+            ->url(url()->current());
+
         return view('docs::show-doc', [
             'categories' => $categories,
             'doc' => $doc,
-            'repository' => Repository::fromFile(resource_path("docs/{$repository}/_meta.yml")),
+            'repository' => $repository,
         ]);
     }
 }

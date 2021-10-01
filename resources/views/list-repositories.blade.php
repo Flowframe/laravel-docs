@@ -14,7 +14,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Repositories</title>
+    <x-seo::meta />
 </head>
 
 <body>
@@ -39,7 +39,10 @@
                 </dl>
 
                 <p>
-                    <a target="_blank" href="{{ $repository->url }}">View on GitHub</a>
+                    <a
+                        target="_blank"
+                        href="{{ $repository->url }}"
+                    >View on GitHub</a>
                 </p>
             </li>
         @endforeach
